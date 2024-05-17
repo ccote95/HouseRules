@@ -91,4 +91,19 @@ public class ChoreController : ControllerBase
         return NoContent();
     }
 
+    [HttpDelete]
+    // [Authorize(Roles = "Admin")]
+    public IActionResult DeleteAChore(int id)
+    {
+        Chore choreToDelete = _dbContext.Chores.Find(id);
+        if (choreToDelete == null)
+        {
+            return NotFound();
+        }
+
+        _dbContext.Remove(choreToDelete);
+        _dbContext.SaveChanges();
+        return NoContent();
+    }
+
 }
