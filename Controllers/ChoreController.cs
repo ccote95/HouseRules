@@ -79,7 +79,7 @@ public class ChoreController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    // [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public IActionResult UpdateAChore(Chore chore, int id)
     {
         Chore choreToUpdate = _dbContext.Chores.FirstOrDefault(c => c.Id == id);
@@ -92,7 +92,7 @@ public class ChoreController : ControllerBase
     }
 
     [HttpDelete]
-    // [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public IActionResult DeleteAChore(int id)
     {
         Chore choreToDelete = _dbContext.Chores.Find(id);
@@ -105,5 +105,26 @@ public class ChoreController : ControllerBase
         _dbContext.SaveChanges();
         return NoContent();
     }
+
+    [HttpPost("{id}/assign")]
+    // [Authorize(Roles = "Admin")]
+    public IActionResult AssignAChore(int id, int? UserId)
+    {
+        Chore choreToAssign = _dbContext.Chores.Find(id);
+        UserProfile userToAssign = _dbContext.UserProfiles.Find(UserId);
+
+
+        ChoreAssignment newAssignment = new ChoreAssignment
+        {
+            UserProfileId = userToAssign.Id,
+            ChoreId = choreToAssign.Id
+        };
+        _dbContext.ChoreAssignments.Add(newAssignment);
+        _dbContext.SaveChanges();
+        return NoContent();
+    }
+
+
+
 
 }
