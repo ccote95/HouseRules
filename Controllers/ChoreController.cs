@@ -70,11 +70,25 @@ public class ChoreController : ControllerBase
     }
 
     [HttpPost]
-    // [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public IActionResult AddANewChore(Chore chore)
     {
         _dbContext.Chores.Add(chore);
         _dbContext.SaveChanges();
         return Ok();
     }
+
+    [HttpPut("{id}")]
+    // [Authorize(Roles = "Admin")]
+    public IActionResult UpdateAChore(Chore chore, int id)
+    {
+        Chore choreToUpdate = _dbContext.Chores.FirstOrDefault(c => c.Id == id);
+
+        choreToUpdate.Name = chore.Name;
+        choreToUpdate.Difficulty = chore.Difficulty;
+        choreToUpdate.ChoreFrequencyDays = chore.ChoreFrequencyDays;
+        _dbContext.SaveChanges();
+        return NoContent();
+    }
+
 }
