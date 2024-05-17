@@ -20,7 +20,7 @@ public class ChoreController : ControllerBase
     }
 
     [HttpGet]
-    // [Authorize]
+    [Authorize]
     public IActionResult GetChores()
     {
         return Ok(_dbContext.Chores
@@ -32,5 +32,20 @@ public class ChoreController : ControllerBase
             ChoreFrequencyDays = c.ChoreFrequencyDays
         }));
 
+    }
+
+    [HttpGet("{id}")]
+    // [Authorize]
+    public IActionResult GetChoreById(int id)
+    {
+        return Ok(_dbContext.Chores
+        .Where(c => c.Id == id)
+        .Select(c => new ChoreDTO
+        {
+            Id = c.Id,
+            Name = c.Name,
+            Difficulty = c.Difficulty,
+            ChoreFrequencyDays = c.ChoreFrequencyDays
+        }));
     }
 }
