@@ -107,7 +107,7 @@ public class ChoreController : ControllerBase
     }
 
     [HttpPost("{id}/assign")]
-    // [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public IActionResult AssignAChore(int id, int? UserId)
     {
         Chore choreToAssign = _dbContext.Chores.Find(id);
@@ -120,6 +120,16 @@ public class ChoreController : ControllerBase
             ChoreId = choreToAssign.Id
         };
         _dbContext.ChoreAssignments.Add(newAssignment);
+        _dbContext.SaveChanges();
+        return NoContent();
+    }
+
+    [HttpPost("{id}/unassign")]
+    // [Authorize(Roles = "Admin")]
+    public IActionResult UnassignChore(int id)
+    {
+        Chore choreToUnassign = _dbContext.Chores.Find(id);
+        _dbContext.Chores.Remove(choreToUnassign);
         _dbContext.SaveChanges();
         return NoContent();
     }
