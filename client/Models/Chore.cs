@@ -12,6 +12,6 @@ public class Chore
     public int Difficulty { get; set; }
     [Required]
     public int ChoreFrequencyDays { get; set; }
-    public List<ChoreCompletion> choreCompletions { get; set; }
+    public List<ChoreCompletion>? choreCompletions { get; set; }
 
 }

@@ -12,5 +12,6 @@ public class ChoreDTO
     public int Difficulty { get; set; }
     [Required]
     public int ChoreFrequencyDays { get; set; }
+    public List<ChoreCompletionDTO> ChoreCompletions { get; set; }
 
 }
