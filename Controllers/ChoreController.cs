@@ -35,7 +35,7 @@ public class ChoreController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    // [Authorize]
+    [Authorize]
     public IActionResult GetChoreById(int id)
     {
         return Ok(_dbContext.Chores
@@ -47,5 +47,34 @@ public class ChoreController : ControllerBase
             Difficulty = c.Difficulty,
             ChoreFrequencyDays = c.ChoreFrequencyDays
         }));
+    }
+
+
+    [HttpPost("{id}/complete")]
+    [Authorize]
+    public IActionResult CompleteChore(int id, int? UserId)
+    {
+        Chore chore = _dbContext.Chores.FirstOrDefault(c => c.Id == id);
+        UserProfile userProfile = _dbContext.UserProfiles.FirstOrDefault(up => up.Id == UserId);
+
+        ChoreCompletion choreToComplete = new ChoreCompletion
+        {
+            UserProfileId = userProfile.Id,
+            ChoreId = chore.Id,
+            CompletedOn = DateTime.Now
+
+        };
+        _dbContext.ChoreCompletions.Add(choreToComplete);
+        _dbContext.SaveChanges();
+        return NoContent();
+    }
+
+    [HttpPost]
+    // [Authorize(Roles = "Admin")]
+    public IActionResult AddANewChore(Chore chore)
+    {
+        _dbContext.Chores.Add(chore);
+        _dbContext.SaveChanges();
+        return Ok();
     }
 }
