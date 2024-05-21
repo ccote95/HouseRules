@@ -17,7 +17,9 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
    
      
         />
-        <Route path="userprofiles" element={<UserProfileList/>}/>
+        <Route path="userprofiles" element={<AuthorizedRoute Roles={"Admin"} loggedInUser={loggedInUser}>
+        <UserProfileList/>
+        </AuthorizedRoute>}/>
 
         <Route
           path="login"

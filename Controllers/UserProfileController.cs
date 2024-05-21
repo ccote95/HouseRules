@@ -63,4 +63,22 @@ public class UserProfileController : ControllerBase
         .FirstOrDefault(up => up.Id == Id));
 
     }
+
+    public IActionResult Get()
+    {
+        return Ok(_dbContext
+            .UserProfiles
+            .Include(up => up.IdentityUser)
+            .Select(up => new UserProfileDTO
+            {
+                Id = up.Id,
+                FirstName = up.FirstName,
+                LastName = up.LastName,
+                Address = up.Address,
+                IdentityUserId = up.IdentityUserId,
+                Email = up.IdentityUser.Email,
+                UserName = up.IdentityUser.UserName
+            })
+            .ToList());
+    }
 }
