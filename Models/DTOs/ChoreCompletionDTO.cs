@@ -15,7 +15,7 @@ public class ChoreCompletionDTO
     public ChoreDTO Chore { get; set; }
     public string CompletedOnDate
     {
-        get { return CompletedOn.Date.ToString("yyyy - MM - dd"); }
+        get { return CompletedOn.Date.ToString("MM - dd - yyyy"); }
     }
 
 }
