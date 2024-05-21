@@ -22,7 +22,11 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           <Route index element={<AuthorizedRoute Roles={"Admin"} loggedInUser={loggedInUser}>
         <UserProfileList/>
         </AuthorizedRoute>}></Route>
-          <Route path=":userprofileid" element={<UserDetails/>}/>
+          <Route path=":userprofileid" element={
+          <AuthorizedRoute Roles={"Admin"}>
+            <UserDetails/>
+          </AuthorizedRoute>
+          }/>
 
         </Route>
 
