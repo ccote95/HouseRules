@@ -12,4 +12,10 @@ public class ChoreCompletionDTO
     public int ChoreId { get; set; }
     [Required]
     public DateTime CompletedOn { get; set; }
+    public ChoreDTO Chore { get; set; }
+    public string CompletedOnDate
+    {
+        get { return CompletedOn.Date.ToString("yyyy - MM - dd"); }
+    }
+
 }

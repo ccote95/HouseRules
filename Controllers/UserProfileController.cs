@@ -28,7 +28,7 @@ public class UserProfileController : ControllerBase
         .Include(up => up.choreAssignments)
             .ThenInclude(ca => ca.Chore)
         .Include(up => up.choreCompletions)
-            .ThenInclude(cc => cc.Chores).Select(up => new UserProfileDTO
+            .ThenInclude(cc => cc.Chore).Select(up => new UserProfileDTO
             {
                 Id = up.Id,
                 FirstName = up.FirstName,
@@ -55,7 +55,15 @@ public class UserProfileController : ControllerBase
                     Id = cc.Id,
                     UserProfileId = cc.UserProfileId,
                     ChoreId = cc.ChoreId,
-                    CompletedOn = cc.CompletedOn
+                    CompletedOn = cc.CompletedOn,
+                    Chore = new ChoreDTO
+                    {
+                        Id = cc.Chore.Id,
+                        Name = cc.Chore.Name,
+                        Difficulty = cc.Chore.Difficulty,
+                        ChoreFrequencyDays = cc.Chore.ChoreFrequencyDays
+                    }
+
                 }).ToList()
 
 
