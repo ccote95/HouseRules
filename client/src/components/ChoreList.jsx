@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getChores } from "../managers/choreManager.js"
+import { deleteChore, getChores } from "../managers/choreManager.js"
 import { Button, Card, CardBody, CardText, CardTitle } from "reactstrap"
 
 export default function ChoreList({loggedInUser})
@@ -9,6 +9,8 @@ export default function ChoreList({loggedInUser})
     useEffect(() => {
         getChores().then(setChores)
     },[])
+
+  
     return(
         <div className="grid gap-0 row-gap-3" style={{display: 'flex', flexDirection: 'column'}}>
             {chores.map((chore) => {
@@ -24,7 +26,9 @@ export default function ChoreList({loggedInUser})
                                 <CardText>
                                     Chore Frequency: {chore.choreFrequencyDays}
                                     {loggedInUser.roles.includes("Admin") ? (
-                                        <Button className="btn-danger" style={{float: "right",}}>DELETE</Button>
+                                        <Button className="btn-danger" style={{float: "right",}} onClick={() => {deleteChore(chore.id).then(() => {
+                                            getChores().then(setChores)
+                                        })}}>DELETE</Button>
 
                                     ) : (null)}
                                 </CardText>
