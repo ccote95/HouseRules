@@ -31,7 +31,9 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
 
         </Route>
         <Route path="chores">
-          <Route index element={<ChoreList/>}/>
+          <Route index element={<AuthorizedRoute loggedInUser={loggedInUser}>
+            <ChoreList loggedInUser={loggedInUser}/>
+            </AuthorizedRoute>}/>
         </Route>
 
 
