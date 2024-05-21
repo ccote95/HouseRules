@@ -27,14 +27,16 @@ return (
         <>
             <NavbarToggler onClick={toggleNavbar} />
             <Collapse isOpen={open} navbar>
-                {loggedInUser.roles.includes("Admin") ? (
+        
+            <Nav navbar>
+        {loggedInUser.roles.includes("Admin") ? (
                         <NavItem>
                         <NavLink tag={RRNavLink} to="/userprofiles">
                             User Profiles
                         </NavLink>
                        </NavItem>
                 ) : (null)}
-           
+        </Nav>
             </Collapse>
             <Button
             color="primary"
