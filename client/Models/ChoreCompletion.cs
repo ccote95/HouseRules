@@ -10,7 +10,7 @@ public class ChoreCompletion
     public int UserProfileId { get; set; }
     [Required]
     public int ChoreId { get; set; }
-    public List<Chore> Chores { get; set; }
+    public Chore Chore { get; set; }
     [Required]
     public DateTime CompletedOn { get; set; }
 }
