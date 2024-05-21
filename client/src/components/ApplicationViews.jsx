@@ -2,6 +2,8 @@ import { Route, Routes } from "react-router-dom";
 import { AuthorizedRoute } from "./auth/AuthorizedRoute";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
+import Home from "./Home.jsx";
+import UserProfileList from "./UserProfileList.jsx";
 
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
@@ -10,9 +12,15 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
       <Route path="/">
         <Route
           index
+          element={<AuthorizedRoute loggedInUser={loggedInUser}><Home/>
+          </AuthorizedRoute>}
+   
      
         />
-      
+        <Route path="userprofiles" element={<AuthorizedRoute Roles={"Admin"} loggedInUser={loggedInUser}>
+        <UserProfileList/>
+        </AuthorizedRoute>}/>
+
         <Route
           path="login"
           element={<Login setLoggedInUser={setLoggedInUser} />}
