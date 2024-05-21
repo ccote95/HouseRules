@@ -23,7 +23,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
         <UserProfileList/>
         </AuthorizedRoute>}></Route>
           <Route path=":userprofileid" element={
-          <AuthorizedRoute Roles={"Admin"}>
+          <AuthorizedRoute Roles={"Admin"} loggedInUser={loggedInUser}>
             <UserDetails/>
           </AuthorizedRoute>
           }/>
