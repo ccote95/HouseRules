@@ -21,7 +21,7 @@ public class ChoreController : ControllerBase
     }
 
     [HttpGet]
-    // [Authorize]
+    [Authorize]
     public IActionResult GetChores()
     {
         return Ok(_dbContext.Chores
@@ -36,7 +36,7 @@ public class ChoreController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    // [Authorize]
+    [Authorize]
     public IActionResult GetChoreById(int id)
     {
         return Ok(_dbContext.Chores
@@ -52,7 +52,7 @@ public class ChoreController : ControllerBase
 
 
     [HttpPost("{id}/complete")]
-    // [Authorize]
+    [Authorize]
     public IActionResult CompleteChore(int id, int? UserId)
     {
         Chore chore = _dbContext.Chores.FirstOrDefault(c => c.Id == id);
@@ -71,7 +71,7 @@ public class ChoreController : ControllerBase
     }
 
     [HttpPost]
-    // [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public IActionResult AddANewChore(Chore chore)
     {
         _dbContext.Chores.Add(chore);
@@ -80,7 +80,7 @@ public class ChoreController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    // [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public IActionResult UpdateAChore(Chore chore, int id)
     {
         Chore choreToUpdate = _dbContext.Chores.FirstOrDefault(c => c.Id == id);
@@ -93,7 +93,7 @@ public class ChoreController : ControllerBase
     }
 
     [HttpDelete]
-    // [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public IActionResult DeleteAChore(int id)
     {
         Chore choreToDelete = _dbContext.Chores.Find(id);
@@ -108,7 +108,7 @@ public class ChoreController : ControllerBase
     }
 
     [HttpPost("{id}/assign")]
-    // [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public IActionResult AssignAChore(int id, int? UserId)
     {
         Chore choreToAssign = _dbContext.Chores.Find(id);
@@ -126,7 +126,7 @@ public class ChoreController : ControllerBase
     }
 
     [HttpPost("{id}/unassign")]
-    // [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public IActionResult UnassignChore(int id)
     {
         Chore choreToUnassign = _dbContext.Chores.Find(id);
@@ -136,7 +136,7 @@ public class ChoreController : ControllerBase
     }
 
     [HttpGet("{id}/withassigned")]
-    // [Authorize]
+    [Authorize]
     public IActionResult GetChoresWithAssignAndCompletes(int id)
     {
         return Ok(_dbContext.Chores
