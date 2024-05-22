@@ -22,6 +22,6 @@ return fetch(_api, {
     headers:{
         "Content-Type" : "application/json"
     },
-    body: JSON.stringify(chore).then((res) => res.json())
-})
+    body: JSON.stringify(chore)
+}).then((res) => res.json())
 }

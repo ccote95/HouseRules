@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
+import { createAChore } from "../managers/choreManager.js";
 
 export default function CreateChore()
 {
@@ -10,11 +11,12 @@ export default function CreateChore()
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setNewChore({
-            name: newChoreName,
-            difficulty: newChoreDifficulty,
-            choreFrequency: newChoreFrequency
-        });
+      const chore = {
+        name: newChoreName,
+        difficulty: newChoreDifficulty,
+        choreFrequencyDays: newChoreFrequency
+      };
+      createAChore(chore)
     }
     return(
         <Form className="w-50 mx-auto " onSubmit={handleSubmit}>
@@ -25,7 +27,7 @@ export default function CreateChore()
                 <Input
                 name="Name"
                 placeholder="Enter a name for your chore"
-                onChange={(e) => {setNewChore(e.target.value)}}/>
+                onChange={(e) => {setNewChoreName(e.target.value)}}/>
             </FormGroup>
             <FormGroup>
                 <Label>
@@ -33,7 +35,7 @@ export default function CreateChore()
                 </Label>
             <Input
             type="select"
-            onChange={(e) => {setNewChoreDifficulty(e.target.value)}}>
+            onChange={(e) => {setNewChoreDifficulty(parseInt(e.target.value))}}>
             <option>
                 Choose a Difficulty
             </option>
@@ -63,7 +65,7 @@ export default function CreateChore()
                 name="chore frequency"
                 type="text"
                 placeholder="Enter the chores frequency in Days"
-                onChange={(e) => {setNewChoreFrequency(e.target.value)}} />
+                onChange={(e) => {setNewChoreFrequency(parseInt(e.target.value))}} />
             </FormGroup>
             <FormGroup>
                 <Button type= "submit"
