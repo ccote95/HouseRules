@@ -33,14 +33,16 @@ export default function ChoreList({loggedInUser})
                                         })}}>DELETE</Button>
 
                                     ) : (null)}
-                                
-                                </CardText>
+                                {loggedInUser.roles.includes("Admin") ? (
+
                                 <div className="d-flex justify-content-center mt-3">
                                       <Link   to={`/chores/${chore.id}`}>
                                     Chore Details
                                     </Link>
 
                                     </div>
+                                ) : (null)}
+                                </CardText>
                                
                             </CardBody>
                     </Card>

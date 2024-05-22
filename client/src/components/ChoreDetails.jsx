@@ -24,17 +24,22 @@ export default function ChoreDetails()
                     <CardText>
                     Chore Frequency: {chore.choreFrequencyDays}
                     </CardText>
-                        {chore.choreCompletions?.map((cc) => {
-                            return (
+                        {chore.choreCompletions?.length > 0 ?( chore.choreCompletions?.map((cc) => (
+                            
                     <CardText>
 
                        Recent Completions: {cc.userProfile.firstName} {cc.userProfile.lastName }
                     </CardText>
-                
+                        ))
+                    ) : (
+                        <CardText>
+                            Recent Completions : No Completions yet!
+                        </CardText>
+                    )}
 
-                            )
+                            
 
-                        })}
+                        
                      {chore.choreAssignments?.length > 0 ? (
     chore.choreAssignments.map((c) => (
         <CardText>
@@ -43,7 +48,7 @@ export default function ChoreDetails()
     ))
 ) : (
     <CardText>
-        Current Assignees: null
+        Current Assignees: No one's cureently assigned
     </CardText>
 )}
                 </CardBody>
