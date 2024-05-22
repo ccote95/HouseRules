@@ -37,6 +37,13 @@ return (
                        </NavItem>
                 ) : (null)}
         </Nav>
+        <Nav navbar>
+             <NavItem>
+                    <NavLink tag={RRNavLink} to="/chores">
+                           Chore List
+                    </NavLink>
+             </NavItem>
+        </Nav>
             </Collapse>
             <Button
             color="primary"
