@@ -45,11 +45,13 @@ return (
              </NavItem>
         </Nav>
         <Nav navbar>
-            <NavItem>
-                <NavLink tag={RRNavLink} to="/chores/create">
-                    Create a Chore
-                </NavLink>
-            </NavItem>
+          {loggedInUser.roles.includes("Admin") ? (
+              <NavItem>
+              <NavLink tag={RRNavLink} to="/chores/create">
+                  Create a Chore
+              </NavLink>
+          </NavItem>
+          ) : (null)}
         </Nav>
             </Collapse>
             <Button

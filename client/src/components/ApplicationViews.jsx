@@ -36,8 +36,12 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           <Route index element={<AuthorizedRoute loggedInUser={loggedInUser}>
             <ChoreList loggedInUser={loggedInUser}/>
             </AuthorizedRoute>}/>
-            <Route path=":choreid" element={<ChoreDetails loggedInUser={loggedInUser}/>}/>
-            <Route path="create" element={<CreateChore/>}/>
+            <Route path=":choreid" element={<AuthorizedRoute>
+              <ChoreDetails loggedInUser={loggedInUser}/>
+            </AuthorizedRoute>}/>
+            <Route path="create" element={<AuthorizedRoute Roles={"Admin"}>
+            <CreateChore loggedInUser={loggedInUser}/>
+            </AuthorizedRoute>}/>
         </Route>
 
 
