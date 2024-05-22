@@ -33,6 +33,7 @@ export default function ChoreList({loggedInUser})
                                         })}}>DELETE</Button>
 
                                     ) : (null)}
+                                    <Button style={{float: "right",}}>Complete</Button>
                                 {loggedInUser.roles.includes("Admin") ? (
 
                                 <div className="d-flex justify-content-center mt-3">
