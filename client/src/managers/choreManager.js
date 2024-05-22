@@ -15,3 +15,13 @@ export const deleteChore = (id) => {
 export const getChoreByIdWithAssignies = (id) => {
     return fetch(`${_api}/${id}/withassigned`).then((res) => res.json())
 }
+
+export const createAChore = (chore) => {
+return fetch(_api, {
+    method: "POST",
+    headers:{
+        "Content-Type" : "application/json"
+    },
+    body: JSON.stringify(chore).then((res) => res.json())
+})
+}
