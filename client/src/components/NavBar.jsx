@@ -44,6 +44,13 @@ return (
                     </NavLink>
              </NavItem>
         </Nav>
+        <Nav navbar>
+            <NavItem>
+                <NavLink tag={RRNavLink} to="/chores/create">
+                    Create a Chore
+                </NavLink>
+            </NavItem>
+        </Nav>
             </Collapse>
             <Button
             color="primary"
