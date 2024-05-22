@@ -6,6 +6,7 @@ import Home from "./Home.jsx";
 import UserProfileList from "./UserProfileList.jsx";
 import UserDetails from "./UserProfileDetails.jsx";
 import ChoreList from "./ChoreList.jsx";
+import ChoreDetails from "./ChoreDetails.jsx";
 
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
@@ -34,6 +35,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           <Route index element={<AuthorizedRoute loggedInUser={loggedInUser}>
             <ChoreList loggedInUser={loggedInUser}/>
             </AuthorizedRoute>}/>
+            <Route path=":choreid" element={<ChoreDetails loggedInUser={loggedInUser}/>}/>
         </Route>
 
 

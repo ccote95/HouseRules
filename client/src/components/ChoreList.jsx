@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { deleteChore, getChores } from "../managers/choreManager.js"
 import { Button, Card, CardBody, CardText, CardTitle } from "reactstrap"
+import { Link } from "react-router-dom"
 
 export default function ChoreList({loggedInUser})
 {
@@ -25,12 +26,22 @@ export default function ChoreList({loggedInUser})
                                 </CardText> 
                                 <CardText>
                                     Chore Frequency: {chore.choreFrequencyDays}
+                                  
                                     {loggedInUser.roles.includes("Admin") ? (
                                         <Button className="btn-danger" style={{float: "right",}} onClick={() => {deleteChore(chore.id).then(() => {
                                             getChores().then(setChores)
                                         })}}>DELETE</Button>
 
                                     ) : (null)}
+                                {loggedInUser.roles.includes("Admin") ? (
+
+                                <div className="d-flex justify-content-center mt-3">
+                                      <Link   to={`/chores/${chore.id}`}>
+                                    Chore Details
+                                    </Link>
+
+                                    </div>
+                                ) : (null)}
                                 </CardText>
                                
                             </CardBody>

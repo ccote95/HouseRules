@@ -11,3 +11,7 @@ export const deleteChore = (id) => {
     })
 
 }
+
+export const getChoreByIdWithAssignies = (id) => {
+    return fetch(`${_api}/${id}/withassigned`).then((res) => res.json())
+}
