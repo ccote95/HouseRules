@@ -44,6 +44,15 @@ return (
                     </NavLink>
              </NavItem>
         </Nav>
+        <Nav navbar>
+          {loggedInUser.roles.includes("Admin") ? (
+              <NavItem>
+              <NavLink tag={RRNavLink} to="/chores/create">
+                  Create a Chore
+              </NavLink>
+          </NavItem>
+          ) : (null)}
+        </Nav>
             </Collapse>
             <Button
             color="primary"
