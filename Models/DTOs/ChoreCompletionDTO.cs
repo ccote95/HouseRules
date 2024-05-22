@@ -8,6 +8,7 @@ public class ChoreCompletionDTO
     public int Id { get; set; }
     [Required]
     public int UserProfileId { get; set; }
+    public UserProfileDTO UserProfile { get; set; }
     [Required]
     public int ChoreId { get; set; }
     [Required]

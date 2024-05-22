@@ -5,6 +5,7 @@ using HouseRules.Models.DTOs;
 using Microsoft.EntityFrameworkCore;
 using HouseRules.Models;
 using Microsoft.AspNetCore.Identity;
+using System.Runtime.InteropServices;
 
 namespace HouseRules.Controllers;
 
@@ -20,7 +21,7 @@ public class ChoreController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize]
+    // [Authorize]
     public IActionResult GetChores()
     {
         return Ok(_dbContext.Chores
@@ -35,7 +36,7 @@ public class ChoreController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    [Authorize]
+    // [Authorize]
     public IActionResult GetChoreById(int id)
     {
         return Ok(_dbContext.Chores
@@ -51,7 +52,7 @@ public class ChoreController : ControllerBase
 
 
     [HttpPost("{id}/complete")]
-    [Authorize]
+    // [Authorize]
     public IActionResult CompleteChore(int id, int? UserId)
     {
         Chore chore = _dbContext.Chores.FirstOrDefault(c => c.Id == id);
@@ -70,7 +71,7 @@ public class ChoreController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Roles = "Admin")]
+    // [Authorize(Roles = "Admin")]
     public IActionResult AddANewChore(Chore chore)
     {
         _dbContext.Chores.Add(chore);
@@ -79,7 +80,7 @@ public class ChoreController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    [Authorize(Roles = "Admin")]
+    // [Authorize(Roles = "Admin")]
     public IActionResult UpdateAChore(Chore chore, int id)
     {
         Chore choreToUpdate = _dbContext.Chores.FirstOrDefault(c => c.Id == id);
@@ -92,7 +93,7 @@ public class ChoreController : ControllerBase
     }
 
     [HttpDelete]
-    [Authorize(Roles = "Admin")]
+    // [Authorize(Roles = "Admin")]
     public IActionResult DeleteAChore(int id)
     {
         Chore choreToDelete = _dbContext.Chores.Find(id);
@@ -107,7 +108,7 @@ public class ChoreController : ControllerBase
     }
 
     [HttpPost("{id}/assign")]
-    [Authorize(Roles = "Admin")]
+    // [Authorize(Roles = "Admin")]
     public IActionResult AssignAChore(int id, int? UserId)
     {
         Chore choreToAssign = _dbContext.Chores.Find(id);
@@ -134,7 +135,56 @@ public class ChoreController : ControllerBase
         return NoContent();
     }
 
+    [HttpGet("{id}/withassigned")]
+    // [Authorize]
+    public IActionResult GetChoresWithAssignAndCompletes(int id)
+    {
+        return Ok(_dbContext.Chores
+                .Include(c => c.ChoreAssignments)
+                    .ThenInclude(ca => ca.UserProfile)
+                .Include(c => c.ChoreCompletions)
+                    .ThenInclude(cc => cc.UserProfile)
+                    .Where(c => c.Id == id)
+                .Select(c => new ChoreDTO
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Difficulty = c.Difficulty,
+                    ChoreFrequencyDays = c.ChoreFrequencyDays,
+                    ChoreCompletions = c.ChoreCompletions.Select(cc => new ChoreCompletionDTO
+                    {
+                        Id = cc.Id,
+                        UserProfileId = cc.UserProfileId,
+                        UserProfile = new UserProfileDTO
+                        {
+                            Id = cc.UserProfile.Id,
+                            FirstName = cc.UserProfile.FirstName,
+                            LastName = cc.UserProfile.LastName,
+                            Address = cc.UserProfile.Address
 
+                        },
+                        ChoreId = cc.ChoreId,
+                        CompletedOn = cc.CompletedOn
+                    }).ToList(),
+                    ChoreAssignments = c.ChoreAssignments.Select(ca => new ChoreAssignmentDTO
+                    {
+                        Id = ca.Id,
+                        UserProfileId = ca.UserProfileId,
+                        UserProfile = new UserProfileDTO
+                        {
+                            Id = ca.UserProfile.Id,
+                            FirstName = ca.UserProfile.FirstName,
+                            LastName = ca.UserProfile.LastName,
+                            Address = ca.UserProfile.Address
+
+                        },
+                        ChoreId = ca.ChoreId
+                    }).ToList()
+                })
+                .ToList()
+                .FirstOrDefault()
+        );
+    }
 
 
 }
