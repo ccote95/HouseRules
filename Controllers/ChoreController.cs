@@ -144,6 +144,7 @@ public class ChoreController : ControllerBase
                     .ThenInclude(ca => ca.UserProfile)
                 .Include(c => c.ChoreCompletions)
                     .ThenInclude(cc => cc.UserProfile)
+
                     .Where(c => c.Id == id)
                 .Select(c => new ChoreDTO
                 {
@@ -151,7 +152,7 @@ public class ChoreController : ControllerBase
                     Name = c.Name,
                     Difficulty = c.Difficulty,
                     ChoreFrequencyDays = c.ChoreFrequencyDays,
-                    ChoreCompletions = c.ChoreCompletions.Select(cc => new ChoreCompletionDTO
+                    ChoreCompletions = c.ChoreCompletions.OrderBy(cc => cc.CompletedOn).Select(cc => new ChoreCompletionDTO
                     {
                         Id = cc.Id,
                         UserProfileId = cc.UserProfileId,
