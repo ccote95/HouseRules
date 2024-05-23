@@ -25,3 +25,13 @@ return fetch(_api, {
     body: JSON.stringify(chore)
 }).then((res) => res.json())
 }
+
+export const completeAChore = (id,userId) => {
+    return fetch(`${_api}/${id}/complete`,{
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({userId})
+    })
+}

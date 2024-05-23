@@ -11,6 +11,10 @@ export default function ChoreList({loggedInUser})
         getChores().then(setChores)
     },[])
 
+    const handleCompleteClick = () => {
+        
+    }
+
   
     return(
         <div className="grid gap-0 row-gap-3" style={{display: 'flex', flexDirection: 'column'}}>
