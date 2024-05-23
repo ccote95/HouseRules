@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { getChoreByIdWithAssignies } from "../managers/choreManager.js"
-import { Card, CardBody, CardText, CardTitle } from "reactstrap"
+import { getChoreByIdWithAssignies, handleCheckBoxChange } from "../managers/choreManager.js"
+import { Card, CardBody, CardText, CardTitle, Input, Label } from "reactstrap"
+import { getUsers } from "../managers/userProfileManager.js"
 
 export default function ChoreDetails()
 {
     const {choreid} = useParams()
     const [chore, setChore] = useState({})
+    const [users, setUsers] = useState([])
 
     useEffect(() => {
         getChoreByIdWithAssignies(choreid).then(setChore)
+        getUsers().then(setUsers)
     },[])
     return (
         <div>
@@ -36,21 +39,27 @@ export default function ChoreDetails()
                             Recent Completions : No Completions yet!
                         </CardText>
                     )}
+                    <h4 style={{fontWeight: "bold"}}>Assign a User</h4>
+                    {users.map((user) => 
+                        {
+                         const isChecked = user.choreAssignments.some(ca => ca.choreId == chore.id)
+                            return(
+                                <CardText>
+                                    <Input
+                                    type="checkbox"
+                                    checked = {isChecked}
+                                    onChange={(e) => handleCheckBoxChange(chore.id,user.id, e.target.checked).then( () => {getUsers().then(setUsers)})}/>
+                                    <Label>
+                                    {user.firstName} {user.lastName}
+        
+                                    </Label>
+                                </CardText>
 
-                            
+                            )
 
                         
-                     {chore.choreAssignments?.length > 0 ? (
-    chore.choreAssignments.map((c) => (
-        <CardText>
-            Current Assignees: {c.userProfile.firstName}
-        </CardText>
-    ))
-) : (
-    <CardText>
-        Current Assignees: No one's cureently assigned
-    </CardText>
-)}
+                        }
+                    )}
                 </CardBody>
             </Card>
         </div>
