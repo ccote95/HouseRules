@@ -48,7 +48,7 @@ export default function ChoreDetails()
                                     <Input
                                     type="checkbox"
                                     checked = {isChecked}
-                                    onChange={(e) => handleCheckBoxChange(user.id, e.target.checked)}/>
+                                    onChange={(e) => handleCheckBoxChange(chore.id,user.id, e.target.checked).then( () => {getUsers().then(setUsers)})}/>
                                     <Label>
                                     {user.firstName} {user.lastName}
         

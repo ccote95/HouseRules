@@ -127,10 +127,10 @@ public class ChoreController : ControllerBase
 
     [HttpPost("{id}/unassign")]
     [Authorize(Roles = "Admin")]
-    public IActionResult UnassignChore(int id)
+    public IActionResult UnassignChore(int id, int? UserId)
     {
-        Chore choreToUnassign = _dbContext.Chores.Find(id);
-        _dbContext.Chores.Remove(choreToUnassign);
+        ChoreAssignment choreToUnassign = _dbContext.ChoreAssignments.SingleOrDefault(ca => ca.ChoreId == id && ca.UserProfileId == UserId);
+        _dbContext.ChoreAssignments.Remove(choreToUnassign);
         _dbContext.SaveChanges();
         return NoContent();
     }
