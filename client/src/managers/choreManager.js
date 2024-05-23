@@ -36,3 +36,17 @@ export const completeAChore = (id,userId) => {
     })
     
 }
+
+export const handleCheckBoxChange = (userId, isChecked) => {
+    const url = isChecked ?
+    `${_api}/${choreId}/assign?userId=${userId}` :
+    `${_api}/${choreId}/unassign?userId=${userId}`;
+    const method = isChecked ? "POST": "DELETE";
+    return fetch(url, {
+        method: method,
+        headers:
+        {
+            "Content-Type": "application/json"
+        }
+    })
+}

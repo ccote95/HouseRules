@@ -77,6 +77,7 @@ public class UserProfileController : ControllerBase
         return Ok(_dbContext
             .UserProfiles
             .Include(up => up.IdentityUser)
+            .Include(up => up.choreAssignments)
             .Select(up => new UserProfileDTO
             {
                 Id = up.Id,
@@ -85,7 +86,14 @@ public class UserProfileController : ControllerBase
                 Address = up.Address,
                 IdentityUserId = up.IdentityUserId,
                 Email = up.IdentityUser.Email,
-                UserName = up.IdentityUser.UserName
+                UserName = up.IdentityUser.UserName,
+                ChoreAssignments = up.choreAssignments.Select(ca => new ChoreAssignmentDTO
+                {
+                    Id = ca.Id,
+                    UserProfileId = ca.UserProfileId,
+                    ChoreId = ca.ChoreId,
+
+                }).ToList()
             })
             .ToList());
     }
