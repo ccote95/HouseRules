@@ -27,11 +27,12 @@ return fetch(_api, {
 }
 
 export const completeAChore = (id,userId) => {
-    return fetch(`${_api}/${id}/complete`,{
+    return fetch(`${_api}/${id}/complete?UserId=${userId}`,{
         method: "POST",
         headers: {
             "Content-Type": "application/json"
-        },
-        body: JSON.stringify({userId})
+        }
+       
     })
+    
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { deleteChore, getChores } from "../managers/choreManager.js"
+import { completeAChore, deleteChore, getChores } from "../managers/choreManager.js"
 import { Button, Card, CardBody, CardText, CardTitle } from "reactstrap"
 import { Link } from "react-router-dom"
 
@@ -11,9 +11,7 @@ export default function ChoreList({loggedInUser})
         getChores().then(setChores)
     },[])
 
-    const handleCompleteClick = () => {
-        
-    }
+
 
   
     return(
@@ -37,7 +35,7 @@ export default function ChoreList({loggedInUser})
                                         })}}>DELETE</Button>
 
                                     ) : (null)}
-                                    <Button style={{float: "right",}}>Complete</Button>
+                                    <Button style={{float: "right",}} onClick={() => {completeAChore(chore.id,loggedInUser.id)}}>Complete</Button>
                                 {loggedInUser.roles.includes("Admin") ? (
 
                                 <div className="d-flex justify-content-center mt-3">
