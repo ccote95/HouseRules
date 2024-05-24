@@ -25,9 +25,9 @@ public class UserProfileController : ControllerBase
     {
         return Ok(_dbContext.UserProfiles
         .Include(up => up.IdentityUser)
-        .Include(up => up.choreAssignments)
+        .Include(up => up.ChoreAssignments)
             .ThenInclude(ca => ca.Chore)
-        .Include(up => up.choreCompletions)
+        .Include(up => up.ChoreCompletions)
             .ThenInclude(cc => cc.Chore).Select(up => new UserProfileDTO
             {
                 Id = up.Id,
@@ -37,7 +37,7 @@ public class UserProfileController : ControllerBase
                 Email = up.IdentityUser.Email,
                 UserName = up.IdentityUser.UserName,
                 IdentityUserId = up.IdentityUser.Id,
-                ChoreAssignments = up.choreAssignments.Select(ca => new ChoreAssignmentDTO
+                ChoreAssignments = up.ChoreAssignments.Select(ca => new ChoreAssignmentDTO
                 {
                     Id = ca.Id,
                     UserProfileId = ca.UserProfileId,
@@ -50,7 +50,7 @@ public class UserProfileController : ControllerBase
                         ChoreFrequencyDays = ca.Chore.ChoreFrequencyDays
                     }
                 }).ToList(),
-                ChoreCompletions = up.choreCompletions.Select(cc => new ChoreCompletionDTO
+                ChoreCompletions = up.ChoreCompletions.Select(cc => new ChoreCompletionDTO
                 {
                     Id = cc.Id,
                     UserProfileId = cc.UserProfileId,
@@ -77,7 +77,7 @@ public class UserProfileController : ControllerBase
         return Ok(_dbContext
             .UserProfiles
             .Include(up => up.IdentityUser)
-            .Include(up => up.choreAssignments)
+            .Include(up => up.ChoreAssignments)
             .Select(up => new UserProfileDTO
             {
                 Id = up.Id,
@@ -87,7 +87,7 @@ public class UserProfileController : ControllerBase
                 IdentityUserId = up.IdentityUserId,
                 Email = up.IdentityUser.Email,
                 UserName = up.IdentityUser.UserName,
-                ChoreAssignments = up.choreAssignments.Select(ca => new ChoreAssignmentDTO
+                ChoreAssignments = up.ChoreAssignments.Select(ca => new ChoreAssignmentDTO
                 {
                     Id = ca.Id,
                     UserProfileId = ca.UserProfileId,

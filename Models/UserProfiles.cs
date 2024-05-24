@@ -17,8 +17,8 @@ public class UserProfile
     public string IdentityUserId { get; set; }
 
     public IdentityUser IdentityUser { get; set; }
-    public List<ChoreAssignment> choreAssignments { get; set; }
-    public List<ChoreCompletion> choreCompletions { get; set; }
+    public List<ChoreAssignment> ChoreAssignments { get; set; }
+    public List<ChoreCompletion> ChoreCompletions { get; set; }
 
 
 }

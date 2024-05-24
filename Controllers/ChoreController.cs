@@ -203,15 +203,16 @@ public class ChoreController : ControllerBase
     public IActionResult GetMyChores(int id)
     {
         return Ok(_dbContext.UserProfiles
-        .Include(u => u.choreAssignments)
+        .Include(u => u.ChoreAssignments)
             .ThenInclude(ca => ca.Chore)
+            .Where(u => u.Id == id)
             .Select(u => new UserProfileDTO
             {
                 Id = u.Id,
                 FirstName = u.FirstName,
                 LastName = u.LastName,
                 Address = u.Address,
-                ChoreAssignments = u.choreAssignments.Select(ca => new ChoreAssignmentDTO
+                ChoreAssignments = u.ChoreAssignments.Select(ca => new ChoreAssignmentDTO
                 {
                     Id = ca.Id,
                     UserProfileId = ca.UserProfileId,
