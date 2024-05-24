@@ -17,5 +17,17 @@ public class ChoreDTO
     public int ChoreFrequencyDays { get; set; }
     public List<ChoreCompletionDTO> ChoreCompletions { get; set; }
     public List<ChoreAssignmentDTO>? ChoreAssignments { get; set; }
+    public bool IsOverdue
+    {
+        get
+        {
+            ChoreCompletionDTO lastCompletion = ChoreCompletions?.OrderByDescending(cc => cc.CompletedOn).FirstOrDefault();
+            if (lastCompletion == null)
+            {
+                return true;
+            }
+            return lastCompletion.CompletedOn.AddDays(ChoreFrequencyDays) < DateTime.Today;
+        }
+    }
 
 }

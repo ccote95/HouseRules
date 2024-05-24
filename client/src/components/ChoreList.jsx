@@ -20,7 +20,7 @@ export default function ChoreList({loggedInUser})
                 return(
                     <Card key={chore.id} className="card border-dark mb-3">
                         <CardBody>
-                           <CardTitle tag={"h5"}>
+                           <CardTitle tag={"h5"}  style={{ color: chore.isOverdue ? 'red' : 'black' }}>
                             {chore.name}
                             </CardTitle>
                                 <CardText>
@@ -35,7 +35,7 @@ export default function ChoreList({loggedInUser})
                                         })}}>DELETE</Button>
 
                                     ) : (null)}
-                                    <Button style={{float: "right",}} onClick={() => {completeAChore(chore.id,loggedInUser.id)}}>Complete</Button>
+                                    <Button style={{float: "right",}} onClick={() => {completeAChore(chore.id,loggedInUser.id).then(() => {getChores().then(setChores)})}}>Complete</Button>
                                 {loggedInUser.roles.includes("Admin") ? (
 
                                 <div className="d-flex justify-content-center mt-3">
