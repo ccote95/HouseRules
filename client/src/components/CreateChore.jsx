@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Button, Form, FormGroup, Input, Label } from "reactstrap";
+import { useEffect, useState } from "react";
+import { Button, Form, FormGroup, Input, Label, Toast, ToastBody, ToastHeader } from "reactstrap";
 import { createAChore } from "../managers/choreManager.js";
 
 export default function CreateChore()
@@ -8,6 +8,19 @@ export default function CreateChore()
     const [newChoreName, setNewChoreName] = useState()
     const [newChoreDifficulty, setNewChoreDifficulty] = useState()
     const [newChoreFrequency, setNewChoreFrequency] = useState()
+    const [errors,setErrors] = useState("")
+    const [showToast, setShowToast] = useState(false);
+
+    useEffect(() => {
+        if (showToast) {
+            const timer = setTimeout(() => {
+                setShowToast(false);
+            }, 5000); // Hide the toast after 5 seconds
+
+            // Cleanup timeout if component unmounts or showToast changes
+            return () => clearTimeout(timer);
+        }
+    }, [showToast]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -16,9 +29,20 @@ export default function CreateChore()
         difficulty: newChoreDifficulty,
         choreFrequencyDays: newChoreFrequency
       };
-      createAChore(chore)
+      createAChore(chore).then((res) => {
+        if (res.errors) {
+            setErrors(res.errors.Name);
+            setShowToast(true)
+          
+        } else {
+            navigate("/chores");
+        }
+        });
     }
+
+   
     return(
+        <div>
         <Form className="w-50 mx-auto " onSubmit={handleSubmit}>
             <FormGroup>
                 <Label>
@@ -76,6 +100,16 @@ export default function CreateChore()
                 </Button>
             </FormGroup>
         </Form>
+        {showToast && (
+                <Toast  isOpen={showToast}  style={{ position: 'fixed', top: '1rem', right: '1rem' }}>
+                    <ToastHeader toggle={() => setShowToast(false)}>Errors</ToastHeader>
+                    <ToastBody>
+                        {errors}
+                    </ToastBody>
+                </Toast>
+            )}
+        </div>
+        
        
     )
 }
