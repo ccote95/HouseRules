@@ -19,4 +19,5 @@ public class Chore
     public List<ChoreAssignment>? ChoreAssignments { get; set; }
 
 
+
 }

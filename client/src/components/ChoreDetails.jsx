@@ -84,7 +84,7 @@ export default function ChoreDetails()
                   
                         {chore.choreCompletions?.length > 0 ?( chore.choreCompletions?.map((cc) => (
                             
-                    <CardText>
+                    <CardText key={cc.id}>
 
                        Recent Completions: {cc.userProfile.firstName} {cc.userProfile.lastName }
                     </CardText>
@@ -99,7 +99,7 @@ export default function ChoreDetails()
                         {
                          const isChecked = user.choreAssignments.some(ca => ca.choreId == chore.id)
                             return(
-                                <CardText>
+                                <CardText key={user.id}>
                                     <Input
                                     type="checkbox"
                                     checked = {isChecked}
