@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { getChoreByIdWithAssignies, handleCheckBoxChange } from "../managers/choreManager.js"
+import { getChoreByIdWithAssignies, handleCheckBoxChange, updateAChore } from "../managers/choreManager.js"
 import { Button, Card, CardBody, CardText, CardTitle, Input, Label } from "reactstrap"
 import { getUsers } from "../managers/userProfileManager.js"
 
@@ -29,6 +29,13 @@ export default function ChoreDetails()
         }
         else {
             setChore({...chore, name: newName, difficulty: newDifficulty, choreFrequencyDays: newFrequency})
+            const updatedChore =
+            {
+                name: newName,
+                difficulty: parseInt(newDifficulty),
+                choreFrequencyDays: parseInt(newFrequency)
+            }
+            updateAChore(updatedChore,chore.id)
             setEdit(false)
         }
     }
@@ -110,14 +117,7 @@ export default function ChoreDetails()
                         }
                     )}
                     <div>
-                        {/* {edit? (
-                            <Button style={{float: "right"}}>Save</Button>
-                        ) : (
-                            <Button style={{float: "right"}} color="danger"
-                            onClick={() => {setEdit(true)}}>Edit</Button>
-
-                        )} */}
-                            <Button color="primary" style={{float: "right"}} onClick={() => handleEditToggle()}>
+                    <Button color="primary" style={{float: "right"}} onClick={() => handleEditToggle()}>
                         {edit ? 'Save' : 'Edit'}
                     </Button>
                     </div>

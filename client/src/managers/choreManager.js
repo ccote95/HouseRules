@@ -50,3 +50,13 @@ export const handleCheckBoxChange = (id,userId, isChecked) => {
         }
     })
 }
+
+export const updateAChore = (chore, id) => {
+    return fetch(`${_api}/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(chore)
+    }).then((res) => res.json())
+}
