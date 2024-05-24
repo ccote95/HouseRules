@@ -199,4 +199,34 @@ public class ChoreController : ControllerBase
     }
 
 
+    [HttpGet("{id}/mychores")]
+    public IActionResult GetMyChores(int id)
+    {
+        return Ok(_dbContext.UserProfiles
+        .Include(u => u.choreAssignments)
+            .ThenInclude(ca => ca.Chore)
+            .Select(u => new UserProfileDTO
+            {
+                Id = u.Id,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                Address = u.Address,
+                ChoreAssignments = u.choreAssignments.Select(ca => new ChoreAssignmentDTO
+                {
+                    Id = ca.Id,
+                    UserProfileId = ca.UserProfileId,
+                    ChoreId = ca.ChoreId,
+                    Chore = new ChoreDTO
+                    {
+                        Id = ca.Chore.Id,
+                        Name = ca.Chore.Name,
+                        Difficulty = ca.Chore.Difficulty,
+                        ChoreFrequencyDays = ca.Chore.ChoreFrequencyDays
+                    }
+                }).ToList()
+            }));
+
+    }
+
+
 }
