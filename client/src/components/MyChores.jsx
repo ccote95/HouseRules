@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getMyChores } from "../managers/choreManager.js"
+import { completeAChore, getMyChores } from "../managers/choreManager.js"
 import { Button, Card, CardBody, CardTitle } from "reactstrap"
 
 export default function MyChores({loggedInUser})
@@ -20,7 +20,8 @@ export default function MyChores({loggedInUser})
             </CardTitle>
             <CardBody>
             {ca.chore.name}
-            <Button  className="btn-success" style={{float: "right"}}>Complete</Button>
+            <Button  className="btn-success" style={{float: "right"}}
+             onClick={() => {completeAChore(ca.chore.id,loggedInUser.id).then(() => {getMyChores(loggedInUser.id).then(setUser)})}}>Complete</Button>
             </CardBody>
         </Card>
 
