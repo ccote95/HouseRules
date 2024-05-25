@@ -60,3 +60,7 @@ export const updateAChore = (chore, id) => {
         body: JSON.stringify(chore)
     }).then((res) => res.json())
 }
+
+export const getMyChores = (id) => {
+    return fetch(`${_api}/${id}/mychores`).then((res) => res.json())
+}

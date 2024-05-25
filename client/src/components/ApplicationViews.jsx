@@ -8,6 +8,7 @@ import UserDetails from "./UserProfileDetails.jsx";
 import ChoreList from "./ChoreList.jsx";
 import ChoreDetails from "./ChoreDetails.jsx";
 import CreateChore from "./CreateChore.jsx";
+import MyChores from "./MyChores.jsx";
 
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
@@ -39,9 +40,17 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             <Route path=":choreid" element={<AuthorizedRoute loggedInUser={loggedInUser}>
               <ChoreDetails loggedInUser={loggedInUser}/>
             </AuthorizedRoute>}/>
-            <Route path="create" element={<AuthorizedRoute Roles={"Admin"} loggedInUser={loggedInUser}>
+            <Route path="create" element={<AuthorizedRoute Roles={"Admin"}>
             <CreateChore loggedInUser={loggedInUser}/>
             </AuthorizedRoute>}/>
+        </Route>
+
+        <Route path="mychores">
+          <Route index element={<AuthorizedRoute loggedInUser={loggedInUser}>
+            <MyChores loggedInUser={loggedInUser}/>
+            </AuthorizedRoute>
+           }/>
+
         </Route>
 
 

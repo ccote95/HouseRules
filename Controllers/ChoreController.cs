@@ -199,4 +199,70 @@ public class ChoreController : ControllerBase
     }
 
 
+    [HttpGet("{id}/mychores")]
+    public IActionResult GetMyChores(int id)
+    {
+        UserProfile u = _dbContext.UserProfiles
+          .Include(u => u.ChoreAssignments)
+              .ThenInclude(ca => ca.Chore)
+              .ThenInclude(c => c.ChoreCompletions)
+            .Include(u => u.ChoreCompletions)
+                .ThenInclude(cc => cc.Chore)
+              .SingleOrDefault(u => u.Id == id);
+        UserProfileDTO userProfileDTO = new UserProfileDTO
+        {
+            Id = u.Id,
+            FirstName = u.FirstName,
+            LastName = u.LastName,
+            Address = u.Address,
+            ChoreAssignments = u.ChoreAssignments.Select(ca => new ChoreAssignmentDTO
+            {
+                Id = ca.Id,
+                UserProfileId = ca.UserProfileId,
+                ChoreId = ca.ChoreId,
+                Chore = new ChoreDTO
+                {
+                    Id = ca.Chore.Id,
+                    Name = ca.Chore.Name,
+                    Difficulty = ca.Chore.Difficulty,
+                    ChoreFrequencyDays = ca.Chore.ChoreFrequencyDays,
+                    ChoreCompletions = ca.Chore.ChoreCompletions.Select(cc => new ChoreCompletionDTO
+                    {
+                        Id = cc.Id,
+                        UserProfileId = cc.UserProfileId,
+                        ChoreId = cc.ChoreId,
+                        CompletedOn = cc.CompletedOn
+
+                    }).ToList()
+                },
+
+            }).Where(ca => ca.Chore.IsOverdue).ToList(),
+            ChoreCompletions = u.ChoreCompletions?.Select(cc => new ChoreCompletionDTO
+            {
+                Id = cc.Id,
+                UserProfileId = cc.UserProfileId,
+                ChoreId = cc.ChoreId,
+                Chore = new ChoreDTO
+                {
+                    Id = cc.Chore.Id,
+                    Name = cc.Chore.Name,
+                    Difficulty = cc.Chore.Difficulty,
+                    ChoreFrequencyDays = cc.Chore.ChoreFrequencyDays
+
+                },
+                CompletedOn = cc.CompletedOn,
+
+            }).ToList()
+        };
+        // userProfileDTO.ChoreAssignments.Where(ca => ca.Chore.IsOverdue);
+        return Ok(userProfileDTO);
+
+
+
+
+
+    }
+
+
 }
+// need to add chore completions to the above endpoint so that the isOverDue is able to run the calculated property

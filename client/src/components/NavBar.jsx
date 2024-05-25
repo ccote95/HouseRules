@@ -53,6 +53,13 @@ return (
           </NavItem>
           ) : (null)}
         </Nav>
+        <Nav navbar>
+            <NavItem>
+                <NavLink tag={RRNavLink} to="/mychores">
+                    My Chores
+                </NavLink>
+            </NavItem>
+        </Nav>
             </Collapse>
             <Button
             color="primary"
