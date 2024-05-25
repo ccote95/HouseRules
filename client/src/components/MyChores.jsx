@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { getMyChores } from "../managers/choreManager.js"
-import { Card, CardTitle } from "reactstrap"
+import { Button, Card, CardBody, CardTitle } from "reactstrap"
 
 export default function MyChores({loggedInUser})
 {
@@ -10,13 +10,18 @@ export default function MyChores({loggedInUser})
         getMyChores(loggedInUser.id).then(setUser)
     },[])
     return(
-        <div>
+        <div className="position-relative " >
+            <h2>{user.firstName} 's Overdue Chore's</h2>
        {user.choreAssignments?.map((ca) => {
         return(
-        <Card>
-            <CardTitle>
-                {ca.chore.name}
+        <Card className="m-auto my-4 p-1 w-50 card text-bg-danger mb-3" style={{width: "18rem"}}>
+            <CardTitle className="p-1">
+                Please Complete
             </CardTitle>
+            <CardBody>
+            {ca.chore.name}
+            <Button  className="btn-success" style={{float: "right"}}>Complete</Button>
+            </CardBody>
         </Card>
 
         )
@@ -26,3 +31,4 @@ export default function MyChores({loggedInUser})
         </div>
     )
 }
+// need to hook functionality up to the complete button to send the completion to the database
